@@ -16,6 +16,7 @@ pandas-metricsreader
    :caption: Contents:
 
    Quick Start <text/quick_start>
+   Data access <text/data_access>
 
 
 Indices and tables
