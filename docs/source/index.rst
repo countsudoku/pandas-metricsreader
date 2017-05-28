@@ -3,13 +3,19 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to pandas-metricsreader's documentation!
-================================================
+pandas-metricsreader
+====================
+
+.. warning::
+    This library is in a early alpha stage. Hence the API can change rapidly.
+    Be aware that the API isn't stable, yet, if you update this library to the
+    next version.
 
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
 
+   Quick Start <text/quick_start>
 
 
 Indices and tables
