@@ -8,7 +8,6 @@ Graphite
 
 .. autoclass:: GraphiteReader
     :members:
-    :inherited-members:
 
 PNP4nagios
 ----------
