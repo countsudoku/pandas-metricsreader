@@ -9,9 +9,10 @@ import urlparse
 from pandas import read_csv, MultiIndex, concat, DataFrame, to_datetime
 from pandas.compat import StringIO, string_types
 
-from pandas_metricsreader.BaseReader import BaseReader, MetricsReaderError
+from pandas_metricsreader.BaseReader import MetricsReaderError
+from .metricsAPI import GraphiteMetricsAPI
 
-class GraphiteReader(BaseReader):
+class GraphiteReader(GraphiteMetricsAPI):
     """
     Creates a GraphiteDataReader object, which you can use to read different
     metrics in a pandas DataFrame
