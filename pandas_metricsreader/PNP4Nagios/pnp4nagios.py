@@ -15,7 +15,7 @@ import numpy as np
 from pandas import DataFrame, to_datetime, MultiIndex, concat
 from pandas.compat import string_types
 
-from .BaseReader import BaseReader, MetricsReaderError
+from pandas_metricsreader.BaseReader import BaseReader
 
 class PNP4NagiosReader(BaseReader):
     """
