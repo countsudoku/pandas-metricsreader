@@ -51,7 +51,7 @@ class GraphiteReader(BaseReader):
         )
 
     def read(self,
-             metrics,
+             targets,
              start=None,
              end=None,
              create_multiindex=True,
@@ -60,7 +60,7 @@ class GraphiteReader(BaseReader):
         """ read the data from Graphite
 
         Arguments:
-            metric (str, list, dict): the metrics you want to look up
+            targets (str, list, dict): the metrics you want to look up
             start (str): the starting date timestamp.
                 All Graphite datestrings are allowed (see `Graphite documentation <http://graphite-api.readthedocs.io/en/latest/api.html#from-until>`_ for details)
             end (str): the ending date timestamp, same as start date
@@ -81,26 +81,26 @@ class GraphiteReader(BaseReader):
         else:
             url = urlparse.urljoin(self.url, self._render_api)
 
-        if isinstance(metrics, string_types):
-            df = self._download_single_metric(url, metrics, start, end)
+        if isinstance(targets, string_types):
+            df = self._download_single_metric(url, targets, start, end)
             if create_multiindex:
                 self._create_multiindex(df, remove_redundant_indices)
-        elif isinstance(metrics, list):
+        elif isinstance(targets, list):
             dfs = []
-            for metric in metrics:
-                dfs.append(self._download_single_metric(url, metric, start, end))
+            for target in targets:
+                dfs.append(self._download_single_metric(url, target, start, end))
             df = concat(dfs, axis=1)
             if create_multiindex:
                 self._create_multiindex(df, remove_redundant_indices)
-        elif isinstance(metrics, dict):
+        elif isinstance(targets, dict):
             dfs = {}
-            for label, metric in metrics.items():
-                dfs[label] = self._download_single_metric(url, metric, start, end)
+            for label, target in targets.items():
+                dfs[label] = self._download_single_metric(url, target, start, end)
                 if create_multiindex:
                     self._create_multiindex(dfs[label], remove_redundant_indices)
             df = concat(dfs, axis=1)
         else:
-            raise TypeError('metric has to be of type str or list')
+            raise TypeError('targets has to be of type str, list or dict')
 
         return df
 
