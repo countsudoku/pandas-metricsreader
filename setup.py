@@ -14,6 +14,5 @@ setup(
     author_email='schneider.moritz@gmail.com',
     url='https://github.com/countsudoku/pandas-metricsreader',
     keywords=['graphite', 'pnp4nagios' ],
-    license='BSD License',
     install_requires=['pandas', 'requests'],
 )
