@@ -49,7 +49,7 @@ class BaseReader(object):
             raise  MetricsReaderError(
                 'Unable to read URL: {url} (status: {status_code})'
                 .format(
-                    url=url,
+                    url=r.url,
                     status_code=r.status_code,
                     )
                 )
