@@ -1,6 +1,7 @@
 __pycache__
 build/
 dist/
+deb_dist/
 docs/build
 *.pyc
 *.pyo
