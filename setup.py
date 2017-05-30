@@ -1,16 +1,13 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-try:
-    from setuptools import setup
-except ImportError:
-    from distutils.core import setup
+from setuptools import setup, find_packages
 
 from pandas_metricsreader import __version__
 
 setup(
     name='pandas-metricsreader',
-    packages=['pandas-metricsreader',],
+    packages=find_packages(exclude=['docs', 'tests*']),
     version=__version__,
     description='Read data from different monitoring systems into a pandas DataFrame',
     author='Moritz C.K.U. Schneider',
