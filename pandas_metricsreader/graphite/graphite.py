@@ -18,19 +18,16 @@ class GraphiteReader(BaseReader):
 
     Arguments:
         url (str): the base url to the Graphite host
-        tls_verify (str, bool): enable or disable certificate validation. You can als
+        tls_verify (str or bool, optional): enable or disable certificate validation. You can als
             specify the path to a certificate or a directory, which must have
             been processed using the c_rehash utily supplied with OppenSSL.
             The default is the standard linux certificate trust store
             (/etc/ssl/certs)
-        session (requests.Session): requests.Session_ object
+        session (:py:obj:`requests.Session`, optional): a :py:class:`requests.Session` object
              (default None)
-        timeout (float, tuple): the connect and read timeouts (see the `requests documentation`_
-            under timeouts_ for details)
+        timeout (float or tuple, optional): the connect and read timeouts (see the requests documentation
+            under `Timeouts <requests:Timeouts>`_ for details)
 
-    .. _requests.Session: http://docs.python-requests.org/en/master/user/advanced/#session-objects
-    .. _requests documentation: http://docs.python-requests.org/en/master/
-    .. _timeouts: http://docs.python-requests.org/en/master/user/advanced/#timeouts
     """
     def __init__(self,
                  url,
@@ -60,13 +57,13 @@ class GraphiteReader(BaseReader):
         """ read the data from Graphite
 
         Arguments:
-            targets (str, list, dict): the metrics you want to look up
-            start (str): the starting date timestamp.
+            targets (str or list[str] or dict): the metrics you want to look up
+            start (str, optional): the starting date timestamp.
                 All Graphite datestrings are allowed (see `Graphite documentation <http://graphite-api.readthedocs.io/en/latest/api.html#from-until>`_ for details)
-            end (str): the ending date timestamp, same as start date
-            create_multiindex (bool): split the metrics names and create a
+            end (str, optional): the ending date timestamp, same as start date
+            create_multiindex (bool, optional): split the metrics names and create a
                 hierarchical Index.
-            remove_redundant_indices (bool): Remove all redundant rows from
+            remove_redundant_indices (bool, optional): Remove all redundant rows from
                 the hierarchical Index. This does only have an affect, if you
                 have more then one metric and if `create_multiindex` is set to
                 True.

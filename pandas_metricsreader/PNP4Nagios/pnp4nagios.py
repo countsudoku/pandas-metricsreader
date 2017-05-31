@@ -24,19 +24,16 @@ class PNP4NagiosReader(BaseReader):
 
     Arguments:
         baseurl (str): the base url to the PNP4Nagios host
-        tls_verify (str, bool): enable or disable certificate validation. You can als
+        tls_verify (str or bool, optional): enable or disable certificate validation. You can als
             specify the path to a certificate or a directory, which must have
             been processed using the c_rehash utily supplied with OppenSSL.
             The default is the standard linux certificate trust store
             (/etc/ssl/certs)
-        session (requests.Session): requests.Session_ object
+        session (:py:obj:`requests.Session`): a :py:obj:`requests.Session` object
              (default None)
-        timeout (float, tuple): the connect and read timeouts (see the `requests documentation`_
-            under timeouts_ for details)
+        timeout (float or tuple): the connect and read timeouts (see the requests documentation
+            under `timeouts <requests:Timeouts>`_ for details)
 
-    .. _requests.Session: http://docs.python-requests.org/en/master/user/advanced/#session-objects
-    .. _requests documentation: http://docs.python-requests.org/en/master/
-    .. _timeouts: http://docs.python-requests.org/en/master/user/advanced/#timeouts
     """
 
     def __init__(self,
@@ -68,16 +65,16 @@ class PNP4NagiosReader(BaseReader):
         """ read the data from PNP4Nagios
 
         Arguments:
-            hosts (str, list): the hosts you want have metrics for
+            hosts (str or list): the hosts you want have metrics for
             service (str): The service metric you want to look up.
-            start (str): the starting date timestamp.
+            start (str, optional): the starting date timestamp.
                 All PNP4Nagios datestrings are allowed (see PNP4Nagios
                 documentation under timeranges_ for details)
-            end (str): the ending date timestamp, same as start date
-            view (Integer): limits the time range to the time period specified
+            end (str, optional): the ending date timestamp, same as start date
+            view (Integer, optional): limits the time range to the time period specified
                 in the PNP4Nagios config (for details see PNP4Nagios
                 documentation under timeranges_).
-            create_multiindex (bool): split the metrics names and create a
+            create_multiindex (bool, optional): split the metrics names and create a
                 hierarchical Index.
 
         returns:
