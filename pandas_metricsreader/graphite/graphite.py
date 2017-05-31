@@ -128,7 +128,7 @@ class GraphiteReader(BaseReader):
             *non-leafs* are all child targets of *targetname*, which do not
             contain any data. *leafs* are all child targets of *targetname*,
             which do hold data. Hence you can use the :func:`read` method to
-            read data from *non-leafs*.
+            read data from all *leafs*.
         """
         if top is None:
             path = '*'
