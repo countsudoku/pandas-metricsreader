@@ -10,6 +10,7 @@ from pandas import read_csv, MultiIndex, concat, DataFrame, to_datetime
 from pandas.compat import StringIO, string_types
 
 from pandas_metricsreader.BaseReader import BaseReader, MetricsReaderError
+from .metricsAPI import GraphiteMetricsAPI
 
 class GraphiteReader(BaseReader):
     """
@@ -42,6 +43,13 @@ class GraphiteReader(BaseReader):
         self._base_tz = 'UTC'
 
         super(GraphiteReader, self).__init__(
+            url=url,
+            tls_verify=tls_verify,
+            session=session,
+            timeout=timeout,
+        )
+
+        self.metrics_obj = GraphiteMetricsAPI(
             url=url,
             tls_verify=tls_verify,
             session=session,
@@ -101,6 +109,46 @@ class GraphiteReader(BaseReader):
             raise TypeError('targets has to be of type str, list or dict')
 
         return df
+
+    def walk(self, top=None, start=None, end=None):
+        """ Generate the target names in the Graphite target tree by walking the tree down. This creates a :func:`os.walk` like generator for the Graphite metrics.
+
+        Arguments:
+            top (str, optional): the target, where the walk starts (without a trailing
+                asterisk)
+            start (str, optional): the starting date timestamp.
+                All Graphite datestrings are allowed (see `Graphite documentation <http://graphite-api.readthedocs.io/en/latest/api.html#from-until>`_ for details)
+            end (str, optional): the ending date timestamp, same as start date
+
+        Returns:
+            a generator object, which yields a 3-tuple ``(targetname, non-leafs,
+            leafs)`` for each metric.
+
+            *targetname* is the current walk position in the target tree.
+            *non-leafs* are all child targets of *targetname*, which do not
+            contain any data. *leafs* are all child targets of *targetname*,
+            which do hold data. Hence you can use the :func:`read` method to
+            read data from *non-leafs*.
+        """
+        if top is None:
+            path = '*'
+        else:
+            path = top.rstrip('.*') + '.*'
+        metrics = self.metrics_obj.find(path, start, end)
+        leafs = set()
+        internal_nodes = set()
+        for metric in metrics:
+            if metric['leaf'] == 0:
+                internal_nodes.add(metric['id'])
+            elif metric['leaf'] == 1:
+                leafs.add(metric['id'])
+            else:
+                raise MetricsReaderError('Unknown metrics format')
+
+        yield (top.rstrip('.*'), list(internal_nodes), list(leafs))
+        for node in internal_nodes:
+            for branch in self.walk(node, start, end):
+                yield branch
 
     def _download_single_metric(self, url, target, start, end):
         """ downloads of the specified target
