@@ -146,11 +146,12 @@ class GraphiteReader(BaseReader):
         leafs = set()
         internal_nodes = set()
         for metric in metrics:
-            if metric['leaf'] == 0:
-                internal_nodes.add(metric['id'])
-            elif metric['leaf'] == 1:
-                leafs.add(metric['id'])
-            else:
+            try:
+                if metric['allowChildren'] == 1:
+                    internal_nodes.add(metric['id'])
+                if metric['leaf'] == 1:
+                    leafs.add(metric['id'])
+            except KeyError:
                 raise MetricsReaderError('Unknown metrics format')
 
         yield (top.rstrip('.*'), list(internal_nodes), list(leafs))
