@@ -2,8 +2,10 @@ __pycache__
 build/
 dist/
 deb_dist/
+debian/
 docs/build
 *.pyc
 *.pyo
 *.egg-info
+*.tar.gz
 .coverage
