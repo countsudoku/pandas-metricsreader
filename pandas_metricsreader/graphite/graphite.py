@@ -27,8 +27,10 @@ class GraphiteReader(BaseReader):
         session (:py:obj:`requests.Session`, optional):
             a :py:class:`requests.Session` object (default None)
         timeout (float or tuple, optional): the connect and read timeouts (see
-            the requests documentation under `Timeouts <requests:Timeouts>`_
+            the requests documentation under `Timeouts`_
             for details)
+
+    .. _Timeouts: http://docs.python-requests.org/en/master/user/quickstart/#timeouts
 
     """
     def __init__(self,
@@ -68,7 +70,10 @@ class GraphiteReader(BaseReader):
         Arguments:
             targets (str or list[str] or dict): the metrics you want to look up
             start (str, optional): the starting date timestamp.
-                All Graphite datestrings are allowed (see `Graphite documentation <http://graphite-api.readthedocs.io/en/latest/api.html#from-until>`_ for details)
+                All Graphite datestrings are allowed (see Graphite
+                documentation under `from-until
+                <http://graphite-api.readthedocs.io/en/latest/api.html#from-until>`_
+                for details)
             end (str, optional): the ending date timestamp, same as start date
             create_multiindex (bool, optional): split the metrics names and
                 create a hierarchical Index.
@@ -117,7 +122,10 @@ class GraphiteReader(BaseReader):
             top (str, optional): the target, where the walk starts (without a trailing
                 asterisk)
             start (str, optional): the starting date timestamp.
-                All Graphite datestrings are allowed (see `Graphite documentation <http://graphite-api.readthedocs.io/en/latest/api.html#from-until>`_ for details)
+                All Graphite datestrings are allowed (see Graphite
+                documentation under `from-until
+                <http://graphite-api.readthedocs.io/en/latest/api.html#from-until>`_
+                for details)
             end (str, optional): the ending date timestamp, same as start date
 
         Returns:

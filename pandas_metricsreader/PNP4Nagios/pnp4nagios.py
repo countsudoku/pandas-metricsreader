@@ -32,8 +32,9 @@ class PNP4NagiosReader(BaseReader):
         session (:py:obj:`requests.Session`): a :py:obj:`requests.Session` object
              (default None)
         timeout (float or tuple): the connect and read timeouts (see the requests documentation
-            under `timeouts <requests:Timeouts>`_ for details)
+            under `Timeouts`_ for details)
 
+    .. _Timeouts: http://docs.python-requests.org/en/master/user/quickstart/#timeouts
     """
 
     def __init__(self,
