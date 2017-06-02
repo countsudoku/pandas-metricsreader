@@ -51,7 +51,7 @@ class GraphiteReader(BaseReader):
             timeout=timeout,
         )
 
-        self.metrics_obj = GraphiteMetricsAPI(
+        self.metrics = GraphiteMetricsAPI(
             url=url,
             tls_verify=tls_verify,
             session=session,
