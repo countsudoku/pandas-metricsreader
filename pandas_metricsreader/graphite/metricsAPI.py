@@ -8,7 +8,7 @@ from __future__ import print_function, absolute_import
 import os
 import urlparse
 
-from pandas_metricsreader.BaseReader import BaseReader
+from ..BaseReader import BaseReader
 
 class GraphiteMetricsAPI(BaseReader):
     """
