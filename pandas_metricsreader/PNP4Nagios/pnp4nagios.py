@@ -45,11 +45,11 @@ class PNP4NagiosReader(BaseReader):
                 ):
 
         super(PNP4NagiosReader, self).__init__(
-                baseurl,
-                tls_verify,
-                session,
-                timeout,
-                )
+            baseurl,
+            tls_verify,
+            session,
+            timeout,
+            )
         self._controller = 'xport'
         self._format = 'json'
         self.base_tz = 'UTC'

@@ -116,7 +116,9 @@ class GraphiteReader(BaseReader):
         return df
 
     def walk(self, top=None, start=None, end=None):
-        """ Generate the target names in the Graphite target tree by walking the tree down. This creates a :func:`os.walk` like generator for the Graphite metrics.
+        """ Generate the target names in the Graphite target tree by walking
+        the tree down. This creates a :func:`os.walk` like generator for the
+        Graphite metrics.
 
         Arguments:
             top (str, optional): the target, where the walk starts (without a trailing
