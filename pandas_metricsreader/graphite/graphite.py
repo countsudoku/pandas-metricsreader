@@ -142,7 +142,7 @@ class GraphiteReader(BaseReader):
             path = '*'
         else:
             path = top.rstrip('.*') + '.*'
-        metrics = self.metrics_obj.find(path, start, end)
+        metrics = self.metrics.find(path, start, end)
         leafs = set()
         internal_nodes = set()
         for metric in metrics:
