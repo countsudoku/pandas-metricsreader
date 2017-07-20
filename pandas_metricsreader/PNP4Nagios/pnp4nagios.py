@@ -12,7 +12,7 @@ import requests
 import numpy as np
 from pandas import DataFrame, to_datetime, MultiIndex, concat
 
-from ..BaseReader import BaseReader
+from ..BaseReader import BaseReader, MetricsReaderError
 
 class PNP4NagiosReader(BaseReader):
     """
@@ -117,6 +117,13 @@ class PNP4NagiosReader(BaseReader):
             )
         r = self._get(url, params=params)
         json_data = r.json()
+        if not json_data:
+            raise MetricsReaderError(
+                'Received empty dataset for host {host} and service {service}'.format(
+                    host=host,
+                    service=service,
+                )
+            )
         index = []
         data = []
         columns = json_data['meta']['legend']['entry']

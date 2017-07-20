@@ -183,7 +183,8 @@ class GraphiteReader(BaseReader):
         r = self._get(url, params=params)
 
         if self._format == 'json':
-            if not r.json:
+            json_data = r.json()
+            if not json_data:
                 raise MetricsReaderError(
                     'Received empty dataset for target {target}'.format(
                         target=target,
@@ -194,7 +195,7 @@ class GraphiteReader(BaseReader):
                 data['datapoints'],
                 columns=[data['target'], 'datetime' ],
                 ).set_index('datetime')
-                    for data in r.json() )
+                    for data in json_data )
             df = concat(dfs, axis=1)
             # Parse the epoch datetime index and set the _base_tz timezone
             df.index = to_datetime(
