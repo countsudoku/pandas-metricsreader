@@ -121,8 +121,8 @@ class GraphiteReader(BaseReader):
         Graphite metrics.
 
         Arguments:
-            top (str, optional): the target, where the walk starts (without a trailing
-                asterisk)
+            top (str, optional): the target, where the walk starts (without a
+                trailing asterisk)
             start (str, optional): the starting date timestamp.
                 All Graphite datestrings are allowed (see Graphite
                 documentation under `from-until
