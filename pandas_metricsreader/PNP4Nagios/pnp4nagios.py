@@ -145,13 +145,6 @@ class PNP4NagiosReader(BaseReader):
         return df
 
     @staticmethod
-    def _init_session(session):
-        """ create a default Session if no session is specified """
-        if session is None:
-            session = requests.Session()
-        return session
-
-    @staticmethod
     def _create_multiindex(DataFrame, sep):
         columns = [ tuple(col.split(sep)) for col in DataFrame.columns.str.strip(sep) ]
         DataFrame.columns = MultiIndex.from_tuples(columns)
