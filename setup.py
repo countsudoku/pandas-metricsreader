@@ -15,6 +15,11 @@ def version():
             if line.startswith('__version__'):
                 return parse(line).body[0].value.s
 
+def requirements():
+    with open(os.path.join(os.path.abspath(os.path.dirname(__file__)),
+                           'requirements.txt')) as input_file:
+        return [line.strip() for line in input_file]
+
 setup(
     name='pandas-metricsreader',
     packages=find_packages(exclude=['docs', 'tests*']),
@@ -24,5 +29,5 @@ setup(
     author_email='schneider.moritz@gmail.com',
     url='https://github.com/countsudoku/pandas-metricsreader',
     keywords=['graphite', 'pnp4nagios' ],
-    install_requires=['pandas', 'requests'],
+    install_requires=requirements(),
 )
