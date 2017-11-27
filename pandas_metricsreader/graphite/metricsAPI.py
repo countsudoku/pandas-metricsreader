@@ -49,12 +49,13 @@ class GraphiteMetricsAPI(BaseReader):
         """
         url_path = os.path.join(self._metrics_api, 'find')
         url = urllib.parse.urljoin(self.url, url_path)
-        params = { 'query': target,
-                   'formater': 'treejson',
-                   'from': start,
-                   'until': end,
-                   'wildcards': 0,
-                 }
+        params = {
+            'query': target,
+            'formater': 'treejson',
+            'from': start,
+            'until': end,
+            'wildcards': 0,
+            }
         r = self._get(url, params=params)
         return r.json()
 
@@ -79,10 +80,11 @@ class GraphiteMetricsAPI(BaseReader):
 
         url_path = os.path.join(self._metrics_api, 'expand')
         url = urllib.parse.urljoin(self.url, url_path)
-        params = { 'query': targets,
-                   'groupByExpr':group_by_expr,
-                   'leavesOnly':leaves_only,
-                 }
+        params = {
+            'query': targets,
+            'groupByExpr':group_by_expr,
+            'leavesOnly':leaves_only,
+            }
         r = self._get(url, params=params)
         return r.json()['results']
 

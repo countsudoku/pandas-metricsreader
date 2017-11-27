@@ -104,12 +104,13 @@ class PNP4NagiosReader(BaseReader):
                             end=None,
                             view=None,
                            ):
-        params = { 'host': host,
-                   'srv' : service,
-                   'start': start,
-                   'end': end,
-                   'view': view,
-                 }
+        params = {
+            'host': host,
+            'srv' : service,
+            'start': start,
+            'end': end,
+            'view': view,
+            }
         url = urllib.parse.urljoin(
             self.url,
             "pnp4nagios/{controller}/{format}".format(
@@ -152,7 +153,7 @@ class PNP4NagiosReader(BaseReader):
 
     @staticmethod
     def _create_multiindex(DataFrame, sep):
-        columns = [ tuple(col.split(sep)) for col in DataFrame.columns.str.strip(sep) ]
+        columns = [tuple(col.split(sep)) for col in DataFrame.columns.str.strip(sep)]
         DataFrame.columns = MultiIndex.from_tuples(columns)
         DataFrame.sort_index(axis=1, inplace=True)
 

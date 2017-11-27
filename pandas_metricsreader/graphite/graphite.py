@@ -178,10 +178,12 @@ class GraphiteReader(BaseReader):
         returns:
             a pandas.DataFrame or Panel
         """
-        params = { 'target': target,
-                   'from': start,
-                   'until': end,
-                   'format': self._format, }
+        params = {
+            'target': target,
+            'from': start,
+            'until': end,
+            'format': self._format,
+            }
         r = self._get(url, params=params)
 
         if self._format == 'json':
@@ -193,11 +195,11 @@ class GraphiteReader(BaseReader):
                     )
                 )
             # generator with dataframes for all returned metrics
-            dfs = ( DataFrame(
+            dfs = (DataFrame(
                 data['datapoints'],
-                columns=[data['target'], 'datetime' ],
+                columns=[data['target'], 'datetime'],
                 ).set_index('datetime')
-                    for data in json_data )
+                   for data in json_data)
             df = concat(dfs, axis=1)
             # Parse the epoch datetime index and set the _base_tz timezone
             df.index = to_datetime(
@@ -212,11 +214,11 @@ class GraphiteReader(BaseReader):
                         target=target,
                     )
                 )
-            df = read_csv( StringIO(r.text),
-                           names=['metric', 'datetime', 'data'],
-                           parse_dates=['datetime'],
-                           index_col=['metric', 'datetime'],
-                           squeeze=False,
+            df = read_csv(StringIO(r.text),
+                          names=['metric', 'datetime', 'data'],
+                          parse_dates=['datetime'],
+                          index_col=['metric', 'datetime'],
+                          squeeze=False,
                          ).unstack('metric')['data']
         return df
 
@@ -226,7 +228,7 @@ class GraphiteReader(BaseReader):
         all other column levels"""
 
         # split the metrics on a dot
-        columns = [ column.split('.') for column in DataFrame.columns.values ]
+        columns = [column.split('.') for column in DataFrame.columns.values]
         row_idx = []
 
         # padding
@@ -235,7 +237,7 @@ class GraphiteReader(BaseReader):
             max_length = max(max_length, len(column))
         for column in columns:
             if len(column) < max_length:
-                column.extend(['' for _ in range(max_length - len(column)) ])
+                column.extend(['' for _ in range(max_length - len(column))])
 
         # check, which metric fields differ
         if remove_redundant_indices and (len(columns) > 1):
@@ -247,7 +249,7 @@ class GraphiteReader(BaseReader):
             row_idx.sort()
             new_columns = []
             for column in columns:
-                new_columns.append([ column[idx] for idx in row_idx])
+                new_columns.append([column[idx] for idx in row_idx])
         else:
             new_columns = columns
 
