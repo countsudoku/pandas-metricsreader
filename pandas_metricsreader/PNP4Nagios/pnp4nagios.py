@@ -1,7 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from __future__ import print_function
+""" A class to get Data from PNP4Nagios """
+
+from __future__ import print_function, absolute_import
 
 from six.moves import urllib
 from six import string_types

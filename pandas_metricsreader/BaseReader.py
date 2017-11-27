@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-""" A class, which implements the metric API of graphite """
+""" A base class to encapsulate the http request stuff"""
 
-from __future__ import print_function
+from __future__ import print_function, absolute_import
 
 import requests
 
