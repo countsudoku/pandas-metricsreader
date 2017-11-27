@@ -3,17 +3,14 @@
 
 from __future__ import print_function
 
-try:
-    import urllib.parse as urlparse
-except ImportError:
-    import urlparse
+from six.moves import urllib
+from six import string_types
 
 #import dateutil
 import requests
 
 import numpy as np
 from pandas import DataFrame, to_datetime, MultiIndex, concat
-from pandas.compat import string_types
 
 from ..BaseReader import BaseReader
 
@@ -111,7 +108,7 @@ class PNP4NagiosReader(BaseReader):
                    'end': end,
                    'view': view,
                  }
-        url = urlparse.urljoin(
+        url = urllib.parse.urljoin(
             self.url,
             "pnp4nagios/{controller}/{format}".format(
                 controller=self._controller,

@@ -4,10 +4,10 @@
 
 from __future__ import print_function, absolute_import
 
-import urlparse
+from six.moves import urllib
+from six import StringIO, string_types
 
 from pandas import read_csv, MultiIndex, concat, DataFrame, to_datetime
-from pandas.compat import StringIO, string_types
 
 from ..BaseReader import BaseReader, MetricsReaderError
 from .metricsAPI import GraphiteMetricsAPI
@@ -90,7 +90,7 @@ class GraphiteReader(BaseReader):
         if not self.url:
             raise MetricsReaderError('No URL specified')
         else:
-            url = urlparse.urljoin(self.url, self._render_api)
+            url = urllib.parse.urljoin(self.url, self._render_api)
 
         if isinstance(targets, string_types):
             df = self._download_single_metric(url, targets, start, end)

@@ -6,7 +6,8 @@
 from __future__ import print_function, absolute_import
 
 import os
-import urlparse
+
+from six.moves import urllib
 
 from ..BaseReader import BaseReader
 
@@ -47,7 +48,7 @@ class GraphiteMetricsAPI(BaseReader):
         Finds metrics under a given path.
         """
         url_path = os.path.join(self._metrics_api, 'find')
-        url = urlparse.urljoin(self.url, url_path)
+        url = urllib.parse.urljoin(self.url, url_path)
         params = { 'query': target,
                    'formater': 'treejson',
                    'from': start,
@@ -77,7 +78,7 @@ class GraphiteMetricsAPI(BaseReader):
             leaves_only = 0
 
         url_path = os.path.join(self._metrics_api, 'expand')
-        url = urlparse.urljoin(self.url, url_path)
+        url = urllib.parse.urljoin(self.url, url_path)
         params = { 'query': targets,
                    'groupByExpr':group_by_expr,
                    'leavesOnly':leaves_only,
