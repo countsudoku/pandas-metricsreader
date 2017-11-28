@@ -4,8 +4,10 @@ dist/
 deb_dist/
 debian/
 docs/build
+htmlcov/
 *.pyc
 *.pyo
 *.egg-info
 *.tar.gz
 .coverage
+.cache
