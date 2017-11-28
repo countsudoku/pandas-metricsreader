@@ -17,7 +17,7 @@ class BaseReader(object):
     """
 
     def __init__(self,
-                 url=None,
+                 url,
                  tls_verify='/etc/ssl/certs/',
                  session=None,
                  timeout=30.,
