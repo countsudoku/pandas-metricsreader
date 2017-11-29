@@ -54,10 +54,21 @@ def test_basereader_get_with_session():
     r = reader._get(test_url, {})
     get.assert_called_once_with(test_url, params={}, timeout=13, verify=False)
 
-def test_basereader_get_to_wrong_url(sample_reader):
+def test_basereader_unauthorized_get(sample_reader):
     """  Tests if a unauthorized request to a url, which needs authorization,
     fails """
     with requests_mock.Mocker() as rmock:
-        rmock.get(test_url, text='foobar', status_code='400')
+        rmock.get(test_url, text='foobar', status_code='401')
         with pytest.raises(MetricsReaderError):
+            sample_reader._get(test_url, {})
+
+def test_basereader_get_wrong_url(sample_reader):
+    """ Test if a _get request fails, when connection to a non existing url
+
+    XXX: Maybe we should catch this requests exception inside of the
+    BaseReader module and return our own Exception to the user.
+    """
+    with requests_mock.Mocker() as rmock:
+        rmock.get(test_url, exc=requests.exceptions.ConnectionError)
+        with pytest.raises(requests.exceptions.ConnectionError):
             sample_reader._get(test_url, {})
