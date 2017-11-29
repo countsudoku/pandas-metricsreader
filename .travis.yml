@@ -8,9 +8,8 @@ python:
   - 'nightly'
 install:
   - pip install -r requirements.txt
+  - pip install -r test_requirements.txt
 # Since we have no tests yet, try to install the package and execute the
 # default actions
 script:
-  - python setup.py install
-  - python -m pandas_metricsreader.graphite.graphite
-  - python -m pandas_metricsreader.PNP4Nagios.pnp4nagios
+  - pytest --cov pandas_metricsreader --cov-report term --cov-report html tests
