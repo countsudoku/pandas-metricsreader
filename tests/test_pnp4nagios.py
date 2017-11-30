@@ -35,7 +35,7 @@ def mock_read_single_metric():
 
 def mock_create_multiindex():
     create_multiindex = mock.Mock(
-        name='read_single_metric',
+        name='create_multiindex',
         spec=PNP4NagiosReader._create_multiindex
         )
     return create_multiindex
