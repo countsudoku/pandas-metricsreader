@@ -3,7 +3,6 @@
 
 """ Unit tests for the PNP4NagiosReader """
 
-import requests
 import mock
 import pytest
 import numpy as np
@@ -17,12 +16,12 @@ test_url = 'https://example.net'
 
 
 @pytest.fixture
-def testDataFrame(host = 'host1', service = 'cpu'):
+def testDataFrame(host='host1', service='cpu'):
     columns = [ '{host}_{service}_{desc}'.format(host=host, service=service, desc=s)
-            for s in ['MIN','MAX','AVR'] ]
+                for s in ['MIN', 'MAX', 'AVR'] ]
     df = pd.DataFrame(
-            np.mod(np.arange(3*8).reshape(8,3), 7),
-            columns=columns,
+        np.mod(np.arange(3*8).reshape(8, 3), 7),
+        columns=columns,
         )
     return df
 
@@ -71,7 +70,6 @@ class Test_PNP4NagiosReader_read(object):
             pnp4nagios,
             testDataFrame,
             ):
-
         df = pnp4nagios.read(hosts='host1', service='cpu', create_multiindex=False)
         assert_frame_equal(df, testDataFrame)
         assert_index_equal(df.index, testDataFrame.index)
@@ -89,15 +87,15 @@ class Test_PNP4NagiosReader_read(object):
         hosts = ['host1', 'host2', 'host3']
         df = pnp4nagios.read(hosts=hosts, service='cpu', create_multiindex=False)
 
-        calls = [((host, 'cpu', None, None, None),{}) for host in hosts]
+        calls = [((host, 'cpu', None, None, None), {}) for host in hosts]
         pnp4nagios._read_single_metric.assert_has_calls(calls, any_order=True)
         pnp4nagios._create_multiindex.assert_not_called()
 
     def test_pnp4nagiosreader_read_multiple_hosts_with_multiindex(self, pnp4nagios):
         hosts = ['host1', 'host2', 'host3']
-        df = pnp4nagios.read(hosts=hosts, service='cpu', create_multiindex=True)
+        pnp4nagios.read(hosts=hosts, service='cpu', create_multiindex=True)
 
-        calls = [((host, 'cpu', None, None, None),{}) for host in hosts]
+        calls = [((host, 'cpu', None, None, None), {}) for host in hosts]
         pnp4nagios._read_single_metric.assert_has_calls(calls, any_order=True)
         pnp4nagios._create_multiindex.assert_called()
 
@@ -114,15 +112,15 @@ class Test_PNP4NagiosReader_create_multiindex(object):
         df = testDataFrame.copy()
         PNP4NagiosReader._create_multiindex(df, '_')
         assert_frame_equal(
-                df.sort_index(axis=1).T.reset_index(drop=True),
-                testDataFrame.sort_index(axis=1).T.reset_index(drop=True),
-                )
+            df.sort_index(axis=1).T.reset_index(drop=True),
+            testDataFrame.sort_index(axis=1).T.reset_index(drop=True),
+            )
         assert_index_equal(df.index, testDataFrame.index)
         assert isinstance(df.columns, pd.MultiIndex)
         for col in testDataFrame.columns:
             assert_series_equal(
-                df.loc[:,tuple(col.split('_'))],
-                testDataFrame.loc[:,col],
+                df.loc[:, tuple(col.split('_'))],
+                testDataFrame.loc[:, col],
                 check_names=False,
                 )
 
@@ -142,14 +140,14 @@ class Test_PNP4NagiosReader_read_single_metric(object):
 
     def test_with_simple_json_data(self, pnp4nagios):
         json_data = {
-                'meta': {'legend':{'entry':[ 'host1' ]}},
-                'data': {'row': [
-                    {'t': 0, 'v': 1},
-                    {'t': 1, 'v': 4},
-                    {'t': 2, 'v': 0},
-                    {'t': 3, 'v': 7},
-                    ]},
-                }
+            'meta': {'legend':{'entry':[ 'host1' ]}},
+            'data': {'row': [
+                {'t': 0, 'v': 1},
+                {'t': 1, 'v': 4},
+                {'t': 2, 'v': 0},
+                {'t': 3, 'v': 7},
+                ]},
+            }
 
         pnp4nagios._get.return_value.json = lambda: json_data
         df = pnp4nagios._read_single_metric('host1', 'load')
